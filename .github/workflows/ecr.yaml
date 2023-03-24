@@ -48,6 +48,7 @@ jobs:
           file: django_aws/django_aws_backend/Dockerfile
           context: .
           push: true
+          tags: "devops-v1"
          
          
           platforms: |

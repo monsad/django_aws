@@ -5,10 +5,6 @@ on:
   pull_request:
     branches:
       - main
-    types: 
-      - opened
-      - reopened
-      - labeled
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-build

@@ -1,4 +1,4 @@
-name: Build django image
+name: ECR
 
 on:
   workflow_call:
@@ -24,7 +24,7 @@ env:
   DJANGO_REPOSITORY: devops_app_backend
 
 jobs:
-  websocket:
+  django_app_backend:
     runs-on: [ t3a-small-docker ]
     environment:
       name: ${{ inputs.environment }}
@@ -52,7 +52,7 @@ jobs:
       - name: Build and push image to ECR
         uses: docker/build-push-action@v4
         with:
-          file: compose/eks/websocket/Dockerfile
+          file: django_aws/django_aws_backend/Dockerfile
           context: .
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.WEBSOCKET_REPOSITORY }}:${{ inputs.tag }}
@@ -63,48 +63,4 @@ jobs:
           #   type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.WEBSOCKET_REPOSITORY }}-cache:${{ inputs.tag }}
           platforms: |
             linux/amd64
-  django:
-    runs-on: [self-hosted, t3-large-docker]
-    environment:
-      name: ${{ inputs.environment }}
-    timeout-minutes: 40
-    steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-        with:
-          driver-opts: image=moby/buildkit:latest
-
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.TERMINAL_AI_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.TERMINAL_AI_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Login to AWS ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Set build options
-        run: |
-          echo NODE_ENV=${{ vars.NODE_ENV }} > frontend/.env
-          echo ${{ secrets.TERMINAL_AI_FRONTEND_ENV }} | base64 --decode >> frontend/.env
-          echo "" >> frontend/.env
-          echo ${{ secrets.FRONTEND_LAMBDA }} | base64 --decode >> frontend/.env
-      - name: Build and push image to ECR
-        uses: docker/build-push-action@v4
-        with:
-          file: compose/eks/django/Dockerfile
-          context: .
-          push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.DJANGO_REPOSITORY }}:${{ inputs.tag }}
-          # cache-from: |
-          #   type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.DJANGO_REPOSITORY }}-cache:develop
-          #   type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.DJANGO_REPOSITORY }}-cache:${{ inputs.tag }}
-          # cache-to: |
-          #   type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.DJANGO_REPOSITORY }}-cache:${{ inputs.tag }}
-          platforms: |
-            linux/amd64
+  

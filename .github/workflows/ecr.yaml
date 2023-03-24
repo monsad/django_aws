@@ -17,7 +17,7 @@ env:
 
 jobs:
   django_app_backend:
-    runs-on: [ t3a-small-docker ]
+    runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment }}
     timeout-minutes: 40

@@ -45,7 +45,7 @@ jobs:
       - name: Build and push image to ECR
         uses: docker/build-push-action@v4
         with:
-          file: django_aws/django_aws_backend/Dockerfile
+          file: django_aws/Dockerfile
           context: .
           push: true
           tags: "devops-v1"

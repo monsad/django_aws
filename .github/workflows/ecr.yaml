@@ -47,12 +47,8 @@ jobs:
           file: django_aws/django_aws_backend/Dockerfile
           context: .
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.WEBSOCKET_REPOSITORY }}:${{ inputs.tag }}
-          # cache-from: |
-          #   type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.WEBSOCKET_REPOSITORY }}-cache:develop
-          #   type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.WEBSOCKET_REPOSITORY }}-cache:${{ inputs.tag }}
-          # cache-to: |
-          #   type=registry,ref=${{ steps.login-ecr.outputs.registry }}/${{ env.WEBSOCKET_REPOSITORY }}-cache:${{ inputs.tag }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.DEVOPS_APP_BACKEND_REPOSITORY }}:${{ inputs.tag }}
+         
           platforms: |
             linux/amd64
   

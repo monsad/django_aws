@@ -48,7 +48,7 @@ jobs:
           file: django_aws/django_aws_backend/Dockerfile
           context: .
           push: true
-          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.DEVOPS_APP_BACKEND_REPOSITORY }}:${{ inputs.tag }}
+         
          
           platforms: |
             linux/amd64

@@ -48,7 +48,7 @@ jobs:
          # Build a docker container and push it to ECR
          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IAMGE_TAG
+         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IAMGE_TAG"
          platforms: |
             linux/amd64
   

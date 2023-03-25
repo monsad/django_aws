@@ -7,9 +7,9 @@ on:
     branches: [ main ]
 
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-build
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.ref }}-build
+#   cancel-in-progress: true
 
 env:
   
@@ -18,16 +18,12 @@ env:
 jobs:
   django_app_backend:
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ inputs.environment }}
     timeout-minutes: 40
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         with:
           driver-opts: image=moby/buildkit:latest
-          
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -43,12 +39,18 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build and push image to ECR
-        uses: docker/build-push-action@v4
-        with:
-          file: Dockerfile
-          context: .
-          push: true
-          tags: "devops-v1"
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secret.REPO_NAME }}
+          IMAGE_TAG: latest
+        run: |
+         # Build a docker container and push it to ECR
+         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IAMGE_TAG
+        
+
          
          
           platforms: |

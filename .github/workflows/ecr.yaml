@@ -49,10 +49,6 @@ jobs:
          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IAMGE_TAG
-        
-
-         
-         
-          platforms: |
+         platforms: |
             linux/amd64
   

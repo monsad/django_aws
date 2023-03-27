@@ -6,7 +6,6 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV DEBIAN_FRONTEND noninteractive
 
-
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install gunicorn==20.1.0
 

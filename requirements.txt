@@ -5,4 +5,4 @@ whitenoise==6.1.0
 celery[sqs]==5.2.6
 boto3==1.24.45
 django_storages==1.13.1
-pillow==9.1.0
+pillow==9.3.0

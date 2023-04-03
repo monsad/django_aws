@@ -46,7 +46,7 @@ jobs:
          IMAGE_TAG: ${{ github.sha }}
         run: |
          # Build a docker container and push it to ECR 
-         docker build -f django_aws/django-ecs-terraform/app/Dockerfile .
+         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
          
          #Add tag
          docker tag devops_app_backend:latest 349767822519.dkr.ecr.us-east-1.amazonaws.com/devops_app_backend:latest

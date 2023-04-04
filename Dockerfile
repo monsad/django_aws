@@ -16,3 +16,5 @@ RUN pip install --no-cache-dir -r /requirements.txt
 
 WORKDIR /app
 COPY . /app
+
+RUN ./manage.py collectstatic --noinput

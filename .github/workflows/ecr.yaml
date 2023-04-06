@@ -1,4 +1,4 @@
-: Deploy to ECR
+name: Deploy to ECR
 
 on:
   pull_request_target:
@@ -9,7 +9,7 @@ permissions:
   pull-requests: write
   contents: write
 
-job:
+jobs:
 
 
   build:

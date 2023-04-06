@@ -1,8 +1,13 @@
 name: Deploy to ECR
 
 on:
-  pull_request_target:
-    branches: [ main ]
+  label:
+    types:
+       - created
+  push:
+    branches:
+        - main
+      
 
 
 permissions:
